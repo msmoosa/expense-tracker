@@ -24,13 +24,8 @@ Plain React 19 + Vite 7, JavaScript/JSX (no TypeScript), no router, no state lib
 
 - `src/main.jsx` mounts `<App />` in `StrictMode`.
 - `src/App.jsx` holds the **entire app in one component**: seed transactions in `useState`, add-transaction form state, type/category filter state, derived totals (income, expenses, balance), and the rendered summary cards, form, and table. Data resets on reload.
-- Transaction shape: `{ id, description, amount, type: "income" | "expense", category, date: "YYYY-MM-DD" }`. The category list is a hard-coded array inside `App`.
+- Transaction shape: `{ id, description, amount: number, type: "income" | "expense", category, date: "YYYY-MM-DD" }`. The category list is a hard-coded array inside `App`.
 - Styling is plain CSS in `src/App.css` (component) and `src/index.css` (global), with class names like `summary-card`, `income-amount`, `expense-amount`.
-
-## Known issues in the starter code
-
-- `amount` is stored as a **string** (in the seed data and from the form input), so the `reduce` totals concatenate strings instead of adding numbers.
-- The "Freelance Work" seed entry has `type: "expense"` but `category: "salary"`.
 
 ## Lint notes
 
