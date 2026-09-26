@@ -23,9 +23,18 @@ There is no test framework configured yet.
 Plain React 19 + Vite 7, JavaScript/JSX (no TypeScript), no router, no state library, no backend or persistence.
 
 - `src/main.jsx` mounts `<App />` in `StrictMode`.
-- `src/App.jsx` holds the **entire app in one component**: seed transactions in `useState`, add-transaction form state, type/category filter state, derived totals (income, expenses, balance), and the rendered summary cards, form, and table. Data resets on reload.
+- `src/App.jsx` owns the `transactions` state (seeded in `useState`; resets on reload) and the `categories` list, and passes them to three children in `src/`:
+  - `Summary` derives income/expense/balance totals from `transactions`.
+  - `TransactionForm` owns its input state and calls `onAdd(transaction)`; `App` appends it.
+  - `TransactionList` owns the type/category filter state and renders the filtered table.
 - Transaction shape: `{ id, description, amount: number, type: "income" | "expense", category, date: "YYYY-MM-DD" }`. The category list is a hard-coded array inside `App`.
-- Styling is plain CSS in `src/App.css` (component) and `src/index.css` (global), with class names like `summary-card`, `income-amount`, `expense-amount`.
+- Styling is plain CSS in `src/App.css` (component) and `src/index.css` (global), with class names like `summary-card`, `income-amount`, `expense-amount`. `App.css` is imported only in `App.jsx` but styles all child components.
+
+## Conventions
+
+- One component per file in `src/` (flat, no subfolders), `function` component with a default export, imported without the `.jsx` extension.
+- Shared data lives in `App` and flows down as props; children report changes through callbacks (`onAdd`). UI-only state (form inputs, filters) stays in the component that uses it. Derived values (totals, filtered lists) are computed during render, not stored in state.
+- Keep `amount` numeric: parse form input with `parseFloat` before it enters `transactions`, or totals break.
 
 ## Lint notes
 
