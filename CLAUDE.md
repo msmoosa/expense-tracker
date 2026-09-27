@@ -26,7 +26,7 @@ Plain React 19 + Vite 7, JavaScript/JSX (no TypeScript), no router, no state lib
 - `src/App.jsx` owns the `transactions` state (seeded in `useState`; resets on reload) and the `categories` list, and passes them to three children in `src/`:
   - `Summary` derives income/expense/balance totals from `transactions`.
   - `TransactionForm` owns its input state and calls `onAdd(transaction)`; `App` appends it.
-  - `TransactionList` owns the type/category filter state and renders the filtered table.
+  - `TransactionList` owns the type/category filter state and renders the filtered table. Each row's Delete button asks `window.confirm`, then calls `onDelete(id)`; `App` removes the transaction.
 - Transaction shape: `{ id, description, amount: number, type: "income" | "expense", category, date: "YYYY-MM-DD" }`. The category list is a hard-coded array inside `App`.
 - Styling is plain CSS in `src/App.css` (component) and `src/index.css` (global), with class names like `summary-card`, `income-amount`, `expense-amount`. `App.css` is imported only in `App.jsx` but styles all child components.
 
